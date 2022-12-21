@@ -11,6 +11,7 @@ public class Desktop extends Thread {
     JDesktopPane desktop = new JDesktopPane();
     Panel panel = new Panel();
     SendEvent se;
+    ReceiveScreen screen;
     public Desktop(Socket socket)  {
         this.socket = socket;
         start();
@@ -36,7 +37,7 @@ public class Desktop extends Thread {
     public void run() {
         try {
             se = new SendEvent(panel, socket);
-            new ReceiveScreen(panel, socket);
+            screen = new ReceiveScreen(panel, socket);
             drawGUI();
         } catch (PropertyVetoException | IOException e) {
             e.printStackTrace();

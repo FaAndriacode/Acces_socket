@@ -16,6 +16,7 @@ public class SendScreen extends Thread {
     int y =0;
     byte[] size = null;
     ByteArrayOutputStream byteArrayOutputStream = null;
+    Graphics g;
     public SendScreen(Socket socket){
         this.socket = socket;
         start();
@@ -39,7 +40,7 @@ public class SendScreen extends Thread {
                 byteArrayOutputStream = new ByteArrayOutputStream();
 
                 //gére les graphics Emplacemnt du souris
-                Graphics g = image.getGraphics();
+                g = image.getGraphics();
                 x = (int) MouseInfo.getPointerInfo().getLocation().getX();
                 y = (int) MouseInfo.getPointerInfo().getLocation().getY();
                 g.drawImage(getCursor(),x,y, 16,16,null);
