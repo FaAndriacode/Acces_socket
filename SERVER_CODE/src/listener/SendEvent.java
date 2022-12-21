@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.net.Socket;
 public class SendEvent implements MouseListener, KeyListener, MouseMotionListener {
     Socket socket;
@@ -78,17 +77,15 @@ public class SendEvent implements MouseListener, KeyListener, MouseMotionListene
     public void mouseDragged(MouseEvent e) {}
     @Override
     public void mouseMoved(MouseEvent e) {
-        System.out.println("Souris deplacer");
         double xscale = panel.getWidth() / dim.width;
         double yscale = panel.getHeight() / dim.height;
         try {
             os.writeObject(Commands.MOUVE_MOUSE.getAbbrev());
-            os.writeObject((int)((e.getX()-10) * xscale));
-            os.writeObject((int)((e.getY()-25) * yscale));
+            os.writeObject((int)((e.getX()-5) * xscale));
+            os.writeObject((int)((e.getY()-30) * yscale));
             os.flush();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-
     }
 }

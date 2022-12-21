@@ -12,7 +12,11 @@ public class SendScreen extends Thread {
     Socket socket;
     OutputStream os;
     boolean loop = true;
-    public SendScreen(Socket socket)throws Exception{
+    int x = 0;
+    int y =0;
+    byte[] size = null;
+    ByteArrayOutputStream byteArrayOutputStream = null;
+    public SendScreen(Socket socket){
         this.socket = socket;
         start();
     }
@@ -29,27 +33,34 @@ public class SendScreen extends Thread {
         } catch (IOException | AWTException e) {
             throw new RuntimeException(e);
         }
-        while (loop) {
-            try {
+        try {
+            while (loop) {
                 image = robot.createScreenCapture(sizeScreen);
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                byteArrayOutputStream = new ByteArrayOutputStream();
 
                 //gére les graphics Emplacemnt du souris
                 Graphics g = image.getGraphics();
-                int x = (int) MouseInfo.getPointerInfo().getLocation().getX();
-                int y = (int) MouseInfo.getPointerInfo().getLocation().getY();
+                x = (int) MouseInfo.getPointerInfo().getLocation().getX();
+                y = (int) MouseInfo.getPointerInfo().getLocation().getY();
                 g.drawImage(getCursor(),x,y, 16,16,null);
 
                 //dessin le souris sur l'image a envoyer
                 ImageIO.write((RenderedImage) image, "jpeg", byteArrayOutputStream);
-                byte[] size = ByteBuffer.allocate(4).putInt(byteArrayOutputStream.size()).array();
+                size = ByteBuffer.allocate(4).putInt(byteArrayOutputStream.size()).array();
                 os.write(size);
                 os.write(byteArrayOutputStream.toByteArray());
                 os.flush();
-
-            }catch (IOException e) {
-                e.printStackTrace();
+                Thread.sleep(400);
             }
+        }catch (IOException e) {
+            try {
+                this.socket.close();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+            System.out.println(e.getMessage());
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 }

@@ -16,7 +16,7 @@ public class Desktop extends Thread {
         start();
     }
     public void drawGUI() throws PropertyVetoException {
-        frame.add(desktop, BorderLayout.CENTER);
+        frame.add(desktop);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 

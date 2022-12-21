@@ -2,8 +2,6 @@ package main;
 import execute.ReceiveEvent;
 import screen.SendScreen;
 import javax.swing.*;
-import java.awt.AWTException;
-import java.io.IOException;
 import java.net.Socket;
 public class Main {
     public static void main(String[] args){
@@ -15,7 +13,7 @@ public class Main {
             new SendScreen(socket);
             new ReceiveEvent(socket);
         }catch (Exception e){
-            System.out.println("Vousd avez sortie de l'application");
+            System.out.println("Vous etes sortie de l'application");
         }
 
     }

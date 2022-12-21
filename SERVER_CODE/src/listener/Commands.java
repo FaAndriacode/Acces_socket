@@ -6,13 +6,10 @@ public enum Commands {
     PRESS_MOUSE(2),
     RELEASED_MOUSE(-2),
     MOUVE_MOUSE(3);
-
     final int abbrev;
-
     Commands(int abbrev) {
         this.abbrev = abbrev;
     }
-
     public int getAbbrev() {
         return this.abbrev;
     }
